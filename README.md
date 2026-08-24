@@ -83,7 +83,7 @@ git init
 git add .
 
 # Create initial commit
-git commit -m "Initial release of Cartly Newspaper Edition"
+git commit -m "Initial release"
 
 # Set main branch and link your personal GitHub remote
 git branch -M main
