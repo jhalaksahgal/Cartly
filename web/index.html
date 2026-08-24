@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Cartly - Voice-driven smart shopping list with natural language AI parsing, smart suggestions & product search.">
+<meta name="theme-color" content="#fffaf3">
+<title>Cartly — Voice Shopping & Smart List</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@500;600;700&family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800;900&family=Sniglet:wght@400;800&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='16' fill='%23ff5747'/><text x='16' y='22' font-family='Sniglet,sans-serif' font-size='18' text-anchor='middle' fill='%23ffffff'>🛒</text></svg>">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body class="newspaper-body">
+<a class="skip-link" href="#list-section">Skip to shopping list</a>
+
+<div class="paper-container">
+  <!-- Top Utility Bar -->
+  <div class="newspaper-top-bar">
+    <div class="top-bar-left">
+      <span class="top-badge">🍎 FRESH & SMART</span>
+      <span class="bullet">&bull;</span>
+      <span>VOICE ASSISTANT</span>
+    </div>
+    <div class="top-bar-center">
+      <span class="edition-tag">NATURAL LANGUAGE COMMERCE</span>
+    </div>
+    <div class="top-bar-right">
+      <label class="visually-hidden" for="language">Voice language</label>
+      <select id="language" class="language-select" aria-describedby="language-hint">
+        <option value="en-US">English (US)</option>
+      </select>
+    </div>
+  </div>
+  <p id="language-hint" class="visually-hidden">
+    Changes the language used for speech recognition and command understanding.
+  </p>
+
+  <!-- Bubbly Header -->
+  <header class="newspaper-header">
+    <div class="newspaper-masthead">
+      <h1 class="newspaper-title">🛒 CARTLY</h1>
+      <p class="newspaper-subtitle">"Speak your groceries • Smart natural language shopping list"</p>
+    </div>
+
+    <div class="newspaper-sub-bar">
+      <span class="sub-date" id="live-date">MONDAY, AUGUST 24, 2026</span>
+      <span class="sub-motto">SAY IT &mdash; INSTANTLY ADDED TO LIST</span>
+      <span class="sub-price">100% PRIVATE</span>
+    </div>
+  </header>
+
+  <!-- Main Grid Layout -->
+  <main class="newspaper-grid">
+
+    <!-- Left Column: Voice Control & Input -->
+    <section class="newspaper-column front-page-lead" aria-labelledby="voice-heading">
+      <div class="article-header">
+        <span class="kicker">🎙️ VOICE COMMAND CENTER</span>
+        <h2 id="voice-heading" class="headline-primary">SPEAK YOUR SHOPPING ORDER</h2>
+        <p class="article-deck">
+          Tap the mic or type commands naturally. Cartly handles items, quantities, removals, updates, and product searches automatically.
+        </p>
+      </div>
+
+      <div id="unsupported-banner" class="banner banner-warning" hidden>
+        <strong>Voice Input Unavailable in this Browser.</strong>
+        <span>Voice input requires Chrome, Edge, or Safari. You can still type commands below.</span>
+      </div>
+
+      <div id="mic-error" class="banner banner-error" hidden role="alert"></div>
+
+      <!-- Microphone Card -->
+      <div class="mic-paper-card">
+        <div class="mic-wrap">
+          <button id="mic" type="button" class="mic-newspaper" aria-live="off"
+                  aria-label="Start listening for a voice command">
+            <span class="mic-ring" aria-hidden="true"></span>
+            <span class="mic-glyph" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="36" height="36" fill="none"
+                   stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/>
+                <path d="M5 11a7 7 0 0 0 14 0"/>
+                <path d="M12 18v3"/>
+              </svg>
+            </span>
+          </button>
+          <div class="mic-label-wrap">
+            <p id="mic-status" class="mic-status">Tap the Microphone &amp; Speak Command</p>
+            <span class="ink-stamp">PRESS TO SPEAK</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Transcript & AI Parse Feedback -->
+      <div id="feedback" class="feedback-newspaper" role="status" aria-live="polite" hidden>
+        <div class="feedback-row" id="fb-heard-row" hidden>
+          <span class="feedback-label">HEARD:</span>
+          <p class="feedback-value" id="fb-heard"></p>
+        </div>
+        <div class="feedback-row" id="fb-understood-row" hidden>
+          <span class="feedback-label">UNDERSTOOD:</span>
+          <p class="feedback-value" id="fb-understood"></p>
+        </div>
+        <div class="feedback-row" id="fb-action-row" hidden>
+          <span class="feedback-label">ACTION:</span>
+          <p class="feedback-value" id="fb-action"></p>
+        </div>
+      </div>
+
+      <!-- Confirmation Prompt -->
+      <div id="confirm-box" class="confirm-box-newspaper" role="alertdialog"
+           aria-labelledby="confirm-text" hidden>
+        <p id="confirm-text"></p>
+        <div class="confirm-actions">
+          <button type="button" id="confirm-yes" class="btn btn-paper-primary">Confirm Action</button>
+          <button type="button" id="confirm-no" class="btn btn-paper-ghost">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Manual Command Dispatch Input -->
+      <div class="dispatch-form-section">
+        <h3 class="section-subhead">TYPE A COMMAND</h3>
+        <form id="text-form" class="text-form-newspaper">
+          <label class="visually-hidden" for="text-input">Type a command</label>
+          <input id="text-input" class="text-input-newspaper" type="text" autocomplete="off"
+                 placeholder="e.g. Add 2 bottles of olive oil and 1 kg apples"
+                 enterkeyhint="send" maxlength="200">
+          <button type="submit" class="btn btn-paper-primary btn-send" aria-label="Run command">
+            ADD ITEM
+          </button>
+        </form>
+      </div>
+
+      <!-- Hot Examples Box -->
+      <div class="examples-box">
+        <span class="examples-head">QUICK TRY COMMANDS:</span>
+        <div class="examples" id="examples" aria-label="Example commands"></div>
+      </div>
+
+      <!-- Search Section Overlay/Section -->
+      <section id="search-section" class="panel-newspaper search-panel" aria-labelledby="search-heading" hidden>
+        <div class="panel-head-newspaper">
+          <h2 id="search-heading">PRODUCT SEARCH RESULTS</h2>
+          <button type="button" id="search-close" class="btn btn-paper-ghost btn-small">Close</button>
+        </div>
+        <div id="search-filters" class="chips-newspaper"></div>
+        <div id="search-results" class="product-grid-newspaper"></div>
+      </section>
+    </section>
+
+    <!-- Vertical Divider -->
+    <div class="newspaper-divider-v"></div>
+
+    <!-- Right Column: Shopping List -->
+    <section id="list-section" class="newspaper-column front-page-classifieds" aria-labelledby="list-heading">
+      <div class="classifieds-header">
+        <span class="kicker">MY GROCERIES</span>
+        <div class="classifieds-title-row">
+          <h2 id="list-heading" class="headline-secondary">SHOPPING LIST</h2>
+          <span id="list-count" class="pill-newspaper">0 items</span>
+        </div>
+        <p class="classifieds-sub">Saved locally in your browser cache.</p>
+      </div>
+
+      <div class="rule-single"></div>
+
+      <div id="list-container" class="classifieds-list"></div>
+
+      <div id="list-empty" class="empty-state-newspaper">
+        <div class="empty-stamp">EMPTY</div>
+        <p class="empty-title">YOUR SHOPPING LIST IS EMPTY</p>
+        <p class="empty-desc">
+          Tap the mic or type an item above. Try saying: <em>&ldquo;Add 2 litres of organic milk and 3 eggs&rdquo;</em>.
+        </p>
+      </div>
+
+      <div class="list-actions-newspaper" id="list-actions" hidden>
+        <button type="button" id="clear-completed" class="btn btn-paper-ghost btn-small">
+          CLEAR COMPLETED
+        </button>
+        <button type="button" id="clear-all" class="btn btn-paper-ghost btn-small btn-danger">
+          CLEAR ALL
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="rule-double"></div>
+
+  <!-- Bottom Section: Suggestions -->
+  <section class="newspaper-editorial-section" aria-labelledby="suggestions-heading">
+    <div class="editorial-head">
+      <div class="editorial-titles">
+        <span class="kicker">IDEAS FOR YOU</span>
+        <h2 id="suggestions-heading" class="headline-tertiary">RECOMMENDED FOR YOUR BASKET</h2>
+      </div>
+      <span class="pill-newspaper pill-muted" id="suggestions-state">&nbsp;</span>
+    </div>
+    <p class="panel-note-newspaper">
+      Personalized suggestions based on seasonal produce and your recent shopping habits.
+    </p>
+    <div id="suggestions" class="suggestion-grid-newspaper"></div>
+  </section>
+
+  <div class="rule-single"></div>
+
+  <!-- Footer -->
+  <footer class="newspaper-footer">
+    <div class="footer-columns">
+      <div class="footer-col">
+        <h4>CARTLY ASSISTANT</h4>
+        <p>Voice-first, privacy-respecting grocery list & commerce assistant.</p>
+      </div>
+      <div class="footer-col">
+        <h4>DATA &amp; PRIVACY</h4>
+        <p>Your shopping list is stored 100% locally in your browser. No tracking or accounts.</p>
+      </div>
+      <div class="footer-col">
+        <h4>TOOLS</h4>
+        <p>
+          <button type="button" id="reset-demo" class="linkish-newspaper">Restore Demo Items</button>
+          <span aria-hidden="true">&bull;</span>
+          <a href="/docs" target="_blank" class="link-paper">API Documentation</a>
+        </p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Cartly. Powered by FastAPI &amp; Web Speech API.</p>
+    </div>
+  </footer>
+</div>
+
+<!-- Toast Notification -->
+<div id="toast" class="toast-newspaper" role="status" aria-live="polite" hidden>
+  <span id="toast-text"></span>
+  <button type="button" id="toast-undo" class="toast-undo-newspaper" hidden>UNDO</button>
+</div>
+
+<script type="module" src="/js/app.js"></script>
+</body>
+</html>
