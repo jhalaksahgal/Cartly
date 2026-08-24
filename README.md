@@ -87,7 +87,7 @@ git commit -m "Initial release of Cartly Newspaper Edition"
 
 # Set main branch and link your personal GitHub remote
 git branch -M main
-git remote add origin https://github.com/<your-username>/cartly.git
+git remote add origin https://github.com/jhalaksahgal/Cartly.git
 
 # Push to your GitHub repository
 git push -u origin main
