@@ -6,28 +6,39 @@
 
 ---
 
+## Live Demo
+
+**Try Cartly online:**
+https://cartly-4tjp.onrender.com
+
+---
+
 ## Key Features
 
-- 📰 **Vintage Newspaper UI ("The Cartly Gazette")**: Multi-column editorial front-page layout, telegraph microphone console, paper parchment palette, and classified-style household ledger.
-- 🎙️ **Voice Dispatch & Web Speech Integration**: Seamless voice recognition with real-time telegraph transcript readout, support for multiple languages, and fallback typed input.
-- 🧠 **Deterministic Natural Language Parser**: Fast Python intent parser that extracts items, quantities, units, brands, and price limits without mandatory external cloud APIs.
-- 💡 **Explainable Market Recommendations**: Smart suggestions based on local purchase history, seasonal produce data, and item pairing rules.
-- 🔒 **Privacy-First & Serverless Local Storage**: Shopping list data remains entirely inside your browser (`localStorage`). No user tracking or account required.
-- 📖 **Built-in OpenAPI & Interactive Documentation**: Full REST API documentation automatically served by FastAPI at `/docs` and `/redoc`.
+* **Vintage Newspaper UI ("The Cartly Gazette")**: Multi-column editorial front-page layout, telegraph microphone console, paper parchment palette, and classified-style household ledger.
+* **Voice Dispatch & Web Speech Integration**: Seamless voice recognition with real-time telegraph transcript readout, support for multiple languages, and fallback typed input.
+* **Deterministic Natural Language Parser**: Fast Python intent parser that extracts items, quantities, units, brands, and price limits without mandatory external cloud APIs.
+* **Explainable Market Recommendations**: Smart suggestions based on local purchase history, seasonal produce data, and item pairing rules.
+* **Privacy-First & Serverless Local Storage**: Shopping list data remains entirely inside your browser (`localStorage`). No user tracking or account required.
+* **Built-in OpenAPI & Interactive Documentation**: Full REST API documentation automatically served by FastAPI at `/docs` and `/redoc`.
 
 ---
 
 ## Quickstart & Local Setup
 
 ### 1. Prerequisites
-- **Python 3.11+** installed on your system.
+
+* **Python 3.11+** installed on your system.
 
 ### 2. Install Dependencies
+
 ```bash
 # Optional: Create and activate a virtual environment
 python -m venv .venv
+
 # On Windows PowerShell:
 .venv\Scripts\Activate.ps1
+
 # On Linux/macOS:
 source .venv/bin/activate
 
@@ -36,27 +47,29 @@ pip install -r requirements.txt
 ```
 
 ### 3. Run Development Server
+
 ```bash
 uvicorn app.main:app --reload
 ```
 
 Once running, open your browser and navigate to:
-- **Application Web Interface**: `http://localhost:8000/`
-- **Interactive API Documentation (Swagger)**: `http://localhost:8000/docs`
-- **Alternative API Documentation (ReDoc)**: `http://localhost:8000/redoc`
+
+* **Application Web Interface**: `http://localhost:8000/`
+* **Interactive API Documentation (Swagger)**: `http://localhost:8000/docs`
+* **Alternative API Documentation (ReDoc)**: `http://localhost:8000/redoc`
 
 ---
 
 ## API Endpoints Overview
 
-| Endpoint | Method | Description |
-| :--- | :---: | :--- |
-| `/api/parse` | `POST` | Parse natural language voice/text commands into structured intent objects. |
-| `/api/search` | `GET` | Search product catalog by query, category, price, and attributes. |
+| Endpoint           | Method | Description                                                                        |
+| :----------------- | :----: | :--------------------------------------------------------------------------------- |
+| `/api/parse`       | `POST` | Parse natural language voice/text commands into structured intent objects.         |
+| `/api/search`      |  `GET` | Search product catalog by query, category, price, and attributes.                  |
 | `/api/suggestions` | `POST` | Get personalized item recommendations based on basket history and seasonal trends. |
-| `/api/languages` | `GET` | Retrieve supported speech recognition languages and locale information. |
-| `/healthz` | `GET` | Plain liveness check for hosting platforms. |
-| `/docs` | `GET` | Interactive Swagger UI API Documentation for **Cartly**. |
+| `/api/languages`   |  `GET` | Retrieve supported speech recognition languages and locale information.            |
+| `/healthz`         |  `GET` | Plain liveness check for hosting platforms.                                        |
+| `/docs`            |  `GET` | Interactive Swagger UI API Documentation for **Cartly**.                           |
 
 ---
 
